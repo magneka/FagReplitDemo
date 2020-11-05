@@ -17,6 +17,17 @@ app.get('/users', async (req, res) => {
   res.json(result)
  })
 
+ app.get('/users2', async (req, res) => {  
+  let ids = await db.list()
+  let result = [{}]
+
+  for (var i = 0; i < ids.length; i++) {    
+    let usr = await db.get(i+1)
+    result[i] = {id: i, ...usr}
+  }
+  res.json(result);  
+});
+
 app.get('/user/:id', async (req, res) => {
   console.log(req.params.id)
   let result = await db.get(req.params.id)  
